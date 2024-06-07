@@ -1,6 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
 import { isEmail } from "validator";
 import bcrypt from "bcrypt";
+
 // Define the TypeScript interface for a User
 interface IUser extends Document {
   firstname: string;
@@ -9,6 +10,9 @@ interface IUser extends Document {
   password: string;
   isAdmin: boolean;
   isSubscriber: boolean;
+  isVerified: boolean;
+  verificationCode: string | null;
+  verificationCodeExpires: Date | null;
 }
 
 // Utilisateur
@@ -29,7 +33,6 @@ const userSchema = new Schema<IUser>(
       unique: true,
       validate: {
         validator: function (value: string) {
-          // Use the isEmail function from the validator package
           return isEmail(value);
         },
         message: "Please enter a valid email.",
@@ -48,25 +51,30 @@ const userSchema = new Schema<IUser>(
       type: Boolean,
       default: true,
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationCode: {
+      type: String,
+      default: null,
+    },
+    verificationCodeExpires: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true }
 );
 
 userSchema.pre("save", async function (next) {
-  const salt = await bcrypt.genSalt();
-  this.password = await bcrypt.hash(this.password, salt);
+  if (this.isModified("password")) {
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
+  }
   next();
 });
 
-/*
-userSchema.pre("findOneAndUpdate", async function (next) {
-  const update = this.getUpdate();
-  const salt = await bcrypt.genSalt();
-  this.password = await bcrypt.hash(this.password, salt);
-  console.log(this);
-  next();
-});
-*/
 const User = mongoose.model<IUser>("User", userSchema);
 
 export { userSchema, User, IUser };

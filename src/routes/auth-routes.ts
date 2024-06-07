@@ -1,16 +1,17 @@
 import { Router } from "express";
 const router = Router();
 import {
-  createUser,
   logIn,
   forgotPassword,
   resetPassword,
+  generateVerificationCode, verifyCodeAndCreateUser
 } from "../controllers/auth-controller";
 import { validate } from "../middlewares/validate";
 import { registerValidationRules } from "../validators/registerValidation";
 import { logInValidationRules } from "../validators/logInValidation";
 
-router.post("/singup", registerValidationRules, validate, createUser);
+router.post("/request-verification", generateVerificationCode);
+router.post("/verify-and-create", registerValidationRules, validate, verifyCodeAndCreateUser);
 router.post("/login", logInValidationRules, validate, logIn);
 router.post("/forgotPassword", forgotPassword);
 router.put("/resetPassword/:token", resetPassword);
