@@ -6,6 +6,7 @@ import cron from 'node-cron';
 import { sendMailToAllSubs } from "./controllers/newsletter-controller";
 dotenv.config();
 
+
 import connectDB from "./config/db";
 
 // Connect to MongoDB

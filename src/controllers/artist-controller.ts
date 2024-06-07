@@ -6,12 +6,16 @@ import Express from "express";
 import mongoose from "mongoose";
 
 // add artist
-export const addArtist = async (req: Express.Request, res: Express.Response): Promise<void> => {
+export const addArtist = async (req: any, res: any): Promise<void> => {
+  console.log(req.body);
+  
   const { firstname, lastname, genre, born_date, born_city, died_date } =
     req.body;
 
   try {
     const existingArtist = await Artist.findOne({ firstname, lastname });
+    console.log(existingArtist);
+    
     if (existingArtist) {
       res.status(409).json({ msg: "Aritst already exists" });
       return;

@@ -19,7 +19,6 @@ router.post(
   checkAdmin,
   upload,
   validateArtist,
-  validate,
   addArtist
 );
 router.route("/").get(requireAuth, getAllArtist);

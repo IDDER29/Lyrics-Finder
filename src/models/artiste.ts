@@ -22,14 +22,14 @@ const ArtistSchema = new Schema<IArtist>(
     },
     picture_url: {
       type: String,
-      validate: {
-        validator: function (v: string) {
-          // Simple URL validation regex
-          return /^(ftp|http|https):\/\/[^ "]+$/.test(v);
-        },
-        message: (props) =>
-          `${props.value} is not a valid URL. Please enter a valid picture URL.`,
-      },
+      // validate: {
+      //   validator: function (v: string) {
+      //     // Simple URL validation regex
+      //     return /^(ftp|http|https):\/\/[^ "]+$/.test(v);
+      //   },
+      //   message: (props) =>
+      //     `${props.value} is not a valid URL. Please enter a valid picture URL.`,
+      // },
     },
     genre: {
       type: String,

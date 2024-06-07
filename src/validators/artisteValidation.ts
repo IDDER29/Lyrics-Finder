@@ -1,5 +1,6 @@
 // src/validators/artistValidator.ts
 import { body } from 'express-validator';
+import {validate} from "../middlewares/validate";
 
 export const validateArtist = [
   body('firstname').notEmpty().withMessage('First name is required'),
@@ -8,4 +9,5 @@ export const validateArtist = [
   body('born_date').optional().isISO8601().withMessage('Born date must be a valid date'),
   body('born_city').optional().notEmpty().withMessage('Born city is required if provided'),
   body('died_date').optional().isISO8601().withMessage('Died date must be a valid date'),
+  validate
 ];
