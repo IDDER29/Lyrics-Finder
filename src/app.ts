@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // for parsing multipart/form-data
-app.use(upload.array('fieldName'));
+// app.use(upload.array('image'));
 
 // Routes
 app.use("/artist", artistRoute);

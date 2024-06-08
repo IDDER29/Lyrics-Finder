@@ -16,7 +16,7 @@ declare global {
 
 const requireAuth = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers["authorization"];
-
+  
   if (authHeader) {
     const token = authHeader.split(" ")[1]; // Split "Bearer <token>" to get the token part
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decodedToken) => {

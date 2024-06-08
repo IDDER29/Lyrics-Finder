@@ -7,3 +7,4 @@ export const validateCreateSong = [
   check('lyrics').notEmpty().withMessage('Lyrics are required'),
   check('artist').notEmpty().withMessage('Artist ID is required').isMongoId().withMessage('Artist ID must be a valid Mongo ID')
 ];
+
